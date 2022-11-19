@@ -51,7 +51,7 @@ class SketchModel:
         out, recog_out = self.net(x, edge_index, data,png)
         return out, recog_out
 
-    def backward(self, out, label, recog_out, recog_label,components_lists):
+    def backward(self, out, label, recog_out, recog_label):
         """
         out: (B*N, C)
         label: (B*N, )
@@ -59,33 +59,18 @@ class SketchModel:
         self.loss1 = self.loss_func(out, label)
         
         self.loss2 = self.recog_loss_func(recog_out,recog_label)
-
-        recog_out1=torch.softmax(recog_out,dim=1)
-        recog_component=torch.mm(recog_out1,self.class_component_matrix)
         
         out=out.view(-1,200,95)
         
-        components_lists=components_lists.float()
-        out=out.float()
-        
-        out1=torch.softmax(out,dim=2)
-        seg_component=torch.bmm(components_lists,out1)
-        seg_component=seg_component.max(dim=1).values
-
-        input=torch.log_softmax(seg_component,dim=1)
-        target=torch.log_softmax(recog_component,dim=1)
-
-        self.loss3=self.kl_loss_func(input,target)
-        self.loss = self.loss1+200*self.loss2+self.loss3
+        self.loss = self.loss1+200*self.loss2
         self.loss.backward()
 
-    def step(self, data,png,components):
+    def step(self, data,png):
         """
         """
         stroke_data= {}
         x = data.x.to(self.device).requires_grad_(self.is_train)
         label = data.y.to(self.device)
-        components_lists=components.to(self.device)
         #recog_label
         recog_label = data.recog_label.to(self.device)
 
@@ -98,7 +83,7 @@ class SketchModel:
         self.optimizer.zero_grad()
         out,recog_out = self.forward(x, edge_index, stroke_data,png)
         
-        self.backward(out, label, recog_out, recog_label,components_lists)
+        self.backward(out, label, recog_out, recog_label)
         self.optimizer.step()
 
     def test_time(self, data):
@@ -118,7 +103,7 @@ class SketchModel:
         
         return out
     
-    def test(self, data,png,components_lists, if_eval=False):
+    def test(self, data,png, if_eval=False):
         """
         x: (B*N, F)
         """
@@ -143,28 +128,7 @@ class SketchModel:
         if (label < 0).any(): # for meaningless label
             self.loss = torch.Tensor([0])
         else:
-            self.loss1 = self.loss_func(out, label)+200*self.recog_loss_func(recog_out,recog_label)
-            
-            
-            recog_out1=torch.softmax(recog_out,dim=1)
-            recog_component=torch.mm(recog_out1,self.class_component_matrix)
-            
-            out=out.view(-1,200,95)
-            
-            components_lists=components_lists.float()
-            out=out.float()
-            
-            
-            out1=torch.softmax(out,dim=2)
-            seg_component=torch.bmm(components_lists,out1)
-            seg_component=seg_component.max(dim=1).values
-
-            input=torch.log_softmax(seg_component,dim=1)
-            target=torch.log_softmax(recog_component,dim=1)
-
-            self.loss3=self.kl_loss_func(input,target)
-            
-            self.loss=self.loss1+self.loss3
+            self.loss = self.loss_func(out, label)+200*self.recog_loss_func(recog_out,recog_label)
 
         return self.loss, predict,recog_predict
         
