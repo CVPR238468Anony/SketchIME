@@ -38,9 +38,9 @@ def run_train(train_params=None, test_params=None):
     min_test_avgloss = 500
     min_test_avgloss_epoch = 0
     for epoch in range(opt.epoch):
-        for i, (data,png,component) in enumerate(trainDataloader):
+        for i, (data,png) in enumerate(trainDataloader):
             
-            model.step(data,png,component)
+            model.step(data,png)
 
             if ii % opt.plot_freq == 0:
                 writer.plot_train_loss(model.loss, ii)
