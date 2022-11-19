@@ -1,0 +1,14 @@
+# Pretraining
+python -u main.py simulation -v -ld "log/sketch/pretrain_basetrain" -p max_train_iter 150  -p data_folder "data" -p trainstage pretrain_baseFSCIL -p pretrainFC linear -p dataset sketch -p random_seed 7 -p learning_rate 0.01 -p batch_size 64 -p optimizer SGD -p SGDnesterov True -p lr_step_size 30 -p representation real -p dim_features 512 -p block_architecture mini_resnet18
+
+# Metatraining
+python -u main.py simulation -v -ld "log/sketch/meta_basetrain" -p max_train_iter 30000 -p data_folder "data" -p resume "log/sketch/pretrain_basetrain"  -p trainstage metatrain_baseFSCIL -p dataset sketch -p average_support_vector_inference True -p random_seed 7 -p learning_rate 0.01 -p batch_size_training 8 -p batch_size_inference 32 -p optimizer SGD -p sharpening_activation softabs -p SGDnesterov True -p lr_step_size 30000  -p  representation tanh -p dim_features 512 -p num_ways 118 -p num_shots 5 -p block_architecture mini_resnet18
+
+# Evaluation Mode 1 (num_shots relates only to number of shots in base session, on novel there are always 5)
+python -u main.py simulation -v -ld "log/sketch/eval/mode1"  -p data_folder "data"  -p resume "log/sketch/meta_basetrain" -p dim_features 512 -p retrain_iter 0 -p nudging_iter 0 -p bipolarize_prototypes False -p nudging_act_exp 4 -p nudging_act doubleexp -p trainstage train_FSCIL -p dataset sketch -p random_seed 7 -p learning_rate 0.01 -p batch_size_training 128 -p batch_size_inference 128 -p num_query_training 0 -p optimizer SGD -p sharpening_activation abs -p SGDnesterov True -p representation tanh -p retrain_act tanh -p num_ways 118 -p num_shots 200 -p block_architecture mini_resnet18
+
+# Evaluation Mode 2
+python -u main.py simulation -v -ld "log/sketch/eval/mode2"  -p data_folder "data"  -p resume "log/sketch/meta_basetrain" -p dim_features 512 -p retrain_iter 10 -p nudging_iter 0 -p bipolarize_prototypes True -p nudging_act_exp 4 -p nudging_act doubleexp -p trainstage train_FSCIL -p dataset sketch -p random_seed 7 -p learning_rate 0.01 -p batch_size_training 128 -p batch_size_inference 128 -p num_query_training 0 -p optimizer SGD -p sharpening_activation abs -p SGDnesterov True -p representation tanh -p retrain_act tanh -p num_ways 118 -p num_shots 200 -p block_architecture mini_resnet18
+
+# Evaluation Mode 3
+python -u main.py simulation -v -ld "log/sketch/eval/mode3" -p data_folder "data"  -p resume "log/sketch/meta_basetrain" -p dim_features 512 -p retrain_iter 50 -p nudging_iter 100 -p bipolarize_prototypes False -p nudging_act_exp 4 -p nudging_act doubleexp -p trainstage train_FSCIL -p dataset sketch -p random_seed 7 -p learning_rate 0.01 -p batch_size_training 128 -p batch_size_inference 128 -p num_query_training 0 -p optimizer SGD -p sharpening_activation abs -p SGDnesterov True -p representation tanh -p retrain_act tanh -p num_ways 118 -p num_shots 200 -p block_architecture mini_resnet18
