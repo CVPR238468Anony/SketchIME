@@ -31,9 +31,8 @@ def eval_align_batchN(model, loader, P=200):
     recog_predictlist=[]
     lossList = []
     # model.clear_confusion()
-    for data,png,component in loader:
-        component=component.cuda().clone().detach()
-        loss, out, recog_out = model.test(data,png,component, if_eval=True)
+    for data,png in loader:
+        loss, out, recog_out = model.test(data,png, if_eval=True)
         lossList.append(loss.item())
         predictList.extend(out.reshape(-1, P).tolist())
         recog_predictlist.extend(recog_out)
