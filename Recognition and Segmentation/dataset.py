@@ -70,14 +70,12 @@ class SketchDataset(torch.utils.data.Dataset):
             if osp.exists(self.pt_dir):
                 self.processed_data = torch.load(self.pt_dir)
             else:
-                self.processed_data,self.recog_png_paths,self.component_path_list = self._process()
+                self.processed_data,self.recog_png_paths = self._process()
 
     def __getitem__(self, index):
         png=Image.open(self.recog_png_paths[index],"r")
         png=self.transforms(png)
-        component=np.load(self.component_path_list[index])
-        component=torch.tensor(component).float()
-        return self.processed_data[index],png,component
+        return self.processed_data[index],png
 
         
     def __len__(self):
@@ -96,13 +94,11 @@ class SketchDataset(torch.utils.data.Dataset):
         raw_data = []
         recog_label_datas=[]
         recog_png_paths=[]
-        components_path_list=[]
         with open(self.json_dir, 'r') as f:
             for line in f:
                 raw_data.append(json.loads(line)["drawing"])
                 recog_label_datas.append(json.loads(line)["recog_label"])
                 recog_png_paths.append(os.path.join(self.png_dir,json.loads(line)["png_path"]))
-                components_path_list.append(os.path.join(self.component_dir,json.loads(line)["component_path"]))
         processed_data = []
         recog_label_datas=torch.LongTensor(recog_label_datas)
         for sketch_index,sketch in enumerate(raw_data):
@@ -160,7 +156,7 @@ class SketchDataset(torch.utils.data.Dataset):
             processed_data.append(sketch_data)
         
         # torch.save(processed_data, self.pt_dir)
-        return processed_data,recog_png_paths,components_path_list
+        return processed_data,recog_png_paths
 
 
 if __name__ == "__main__":
