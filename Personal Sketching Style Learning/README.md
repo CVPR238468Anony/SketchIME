@@ -15,14 +15,14 @@ The code repository is constructed based on the released code repository [Deep-U
 **Training and inference**
 ---
 
-To train the model in your computer you must download the [**SketchIME-PSSL**] dataset and put it in your DataSet folder. 
+To train the model in your computer you must download the [**SketchIME-PSSL**](https://drive.google.com/file/d/1T9CaF02Tt3hf6MdM3Mqm3sg9G06s60E-/view?usp=share_link) dataset and put it in your DataSet folder. 
 
 Execute training of a method by going to its folder (e.g. DeepCORAL):
 
 ```
 cd DeepCORAL/
-python main.py --epochs 50 --batch_size_source 48 --batch_size_target 48 --name_source sketch/source --name_tgttrain sketch/test1/66/train --name_tgttest sketch/test1/66/test --result_path logs/sketch/ --adapt_domain
-python main.py --epochs 50 --batch_size_source 48 --batch_size_target 48 --name_source sketch/source --name_tgttrain sketch/test1/66/train --name_tgttest sketch/test1/66/test --result_path logs/sketch/ --adapt_domain --target_supervised
+python main.py --epochs 50 --batch_size_source 48 --batch_size_target 48 --name_source sketch/source --name_tgttrain sketch/ALL5/66/train --name_tgttest sketch/ALL5/66/test --result_path logs/sketch/ --adapt_domain
+python main.py --epochs 50 --batch_size_source 48 --batch_size_target 48 --name_source sketch/source --name_tgttrain sketch/ALL5/66/train --name_tgttest sketch/ALL5/66/test --result_path logs/sketch/ --adapt_domain --target_supervised
 ```
 
 The following is a list of the arguments the user can provide:
