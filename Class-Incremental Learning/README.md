@@ -9,7 +9,7 @@
 
 #### Dataset
 
-Download dataset from [Here](https://pan.baidu.com/s/17p5Mrln9ThQlFxLCxdpfZA), the password is *etvp*.
+Download dataset from [Here](https://drive.google.com/file/d/1zU_exwxQTI3V2hoTQHYL0BH2xD19SjE4/view?usp=share_link).
 
 Unzip the file and put "sketch" into "FACT/data/".
 
@@ -32,7 +32,7 @@ sh train_sketch.sh
 
 #### Dataset
 
-Download dataset from [Here](https://pan.baidu.com/s/17p5Mrln9ThQlFxLCxdpfZA), the password is *etvp*.
+Download dataset from [Here](https://drive.google.com/file/d/1zU_exwxQTI3V2hoTQHYL0BH2xD19SjE4/view?usp=share_link).
 
 Unzip the file and put "sketch" into "LIMIT/data/".
 
@@ -40,7 +40,7 @@ Unzip the file and put "sketch" into "LIMIT/data/".
 
 Put pretrain model into "LIMIT/params". There are two ways to get pretrain model:
 
-1. Download the model from [Here](https://pan.baidu.com/s/1fCo_KcK97WVI_L7KtrRfcw), the password is *etvp*.
+1. Download the model from [Here](https://drive.google.com/file/d/1vx5obUnBXmdpuXjxNKDT1CTc7KE-QjIz/view?usp=share_link).
 
 2. Run:
 
@@ -70,7 +70,7 @@ sh train_sketch.sh
 
 #### Dataset
 
-Download dataset from [Here](https://pan.baidu.com/s/17p5Mrln9ThQlFxLCxdpfZA), the password is *etvp*.
+Download dataset from [Here](https://drive.google.com/file/d/1zU_exwxQTI3V2hoTQHYL0BH2xD19SjE4/view?usp=share_link).
 
 Unzip the file and put "sketch" into "SPPR/datasets/sketch/".
 
@@ -94,7 +94,7 @@ sh train_sketch.sh
 
 #### Dataset
 
-Download dataset from [Here](https://pan.baidu.com/s/17p5Mrln9ThQlFxLCxdpfZA), the password is *etvp*.
+Download dataset from [Here](https://drive.google.com/file/d/1zU_exwxQTI3V2hoTQHYL0BH2xD19SjE4/view?usp=share_link).
 
 Unzip the file and put "sketch" into "CFSCIL/code/data/".
 
@@ -117,7 +117,7 @@ sh train_sketch.sh
 
 #### Dataset
 
-Download dataset from [Here](https://pan.baidu.com/s/17p5Mrln9ThQlFxLCxdpfZA), the password is *etvp*.
+Download dataset from [Here](https://drive.google.com/file/d/1zU_exwxQTI3V2hoTQHYL0BH2xD19SjE4/view?usp=share_link).
 
 Unzip the file and put "sketch" into "CDAN/data/".
 
@@ -125,8 +125,9 @@ Unzip the file and put "sketch" into "CDAN/data/".
 
 Put all pretrain models into "CDAN/params".There are two ways to get pretrain models.
 
-1. Download the models from [Here](https://pan.baidu.com/s/183DQOO1LmmzsOSOjb4A3Fw), the password is *etvp*.
-2. Train **FACT** to get models. You can find 17 models named "session*_max_acc.pth" for each sessions respectively.
+1. Download the model from [Here](https://drive.google.com/file/d/1vx5obUnBXmdpuXjxNKDT1CTc7KE-QjIz/view?usp=share_link).
+2. 
+2. Train **FACT** to get models. You can find 17 models named "session*__max_acc.pth" for each sessions respectively.
 
 #### Training
 
